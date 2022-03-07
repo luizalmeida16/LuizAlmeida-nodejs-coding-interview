@@ -3,13 +3,14 @@ import { FlightsService } from '../services/flights.service'
 
 const flightsService = new FlightsService()
 
-@JsonController('/flights')
+@JsonController('/flights', { transformResponse: false })
 export default class FlightsController {
-    @Get('', { transformResponse: false })
-    getAll() {
+    @Get()
+    async getAll() {
+        const data = await flightsService.getAll()
         return {
             status: 200,
-            data: flightsService.getAll(),
+            data,
         }
     }
 }
